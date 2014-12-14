@@ -24,13 +24,13 @@
 				<div id="triangle"></div>
 			</div>
 
-			<form id="quoteForm">
+			<form id="quoteForm" action="http://127.0.0.1:3000/postQuote" method="post">
 				Lähettäjä:<br>
 				<input id="sender" type="text" name="sender" maxlength="30"><br>
 
 				Sijainti/kanava:<br><input id="place" type="text" name="place" maxlength="40"><br>
 
-				Quote: <br><textarea rows="4" cols="50" name="comment"></textarea><br>
+				Quote: <br><textarea id="quote" rows="4" cols="50" name="quote"></textarea><br>
 
 				<input id="sendQuote" value="Lähetä" type="submit">
 			</form>
@@ -63,6 +63,19 @@
 					$("#quoteDiv").removeClass("animated fadeInUp");
 					$("#quoteDiv").addClass("animated fadeOutDown");
 				});
+			});
+		</script>
+		<!-- For reading form info and sending to node -->
+		<script type="text/javascript">
+			$("quoteForm").submit(function(e) {
+				e.preventDefault(); // Prevents the page from refreshing
+				var $this = $(this); // `this` refers to the current form element
+				$.post(
+					$this.attr("action"), // Gets the URL to sent the post to
+					$this.serialize(), // Serializes form data in standard format
+					function(data) { /** code to handle response **/ },
+					"json" // The format the response should be in
+				);
 			});
 		</script>
 	</body>

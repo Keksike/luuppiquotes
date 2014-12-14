@@ -1,3 +1,11 @@
+/*
+ * LuuppiQuotes server
+ *
+ *
+ * @Author: Cihan Bebek
+ *
+*/
+
 var express         = require('express'),
     app             = express(),
     path            = require('path'),
@@ -9,7 +17,7 @@ var express         = require('express'),
     _               = require('underscore');
 
 /*Create connection to db*/
-var connection = mongoose.createConnection("mongodb://localhost/myDatabase");
+var connection = mongoose.connect('mongodb://localhost/quotesdb');
 /*Mongoose-auto-increment init*/
 autoIncrement.initialize(connection);
 
@@ -20,8 +28,6 @@ app.use( bodyParser.json() );    // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({  // to support URL-encoded bodies
     extended: true
 })); 
-//establish connection to db
-mongoose.connect('mongodb://localhost/quotesdb');
 
 /*Functionality starts here*/
 var quoteSchema = new mongoose.Schema({
@@ -53,7 +59,7 @@ quoteSchema.plugin(autoIncrement.plugin, {model: 'Quote', field: 'quoteId'});
 
 /*Posts new quote to db*/
 /*Requires a "place"-string and "quote"-string*/
-app.post('/', function(req, res) {
+app.post('/postQuote', function(req, res) {
     //Create new instance of Quote-model, with the sent data (req.body)
     var quote = new Quote(req.body);
 
@@ -62,9 +68,6 @@ app.post('/', function(req, res) {
         res.send(201, _.pick(quote, 'quoteId'));
     });
 });
-
-
-
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Listening on port " + app.get('port'));

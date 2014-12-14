@@ -13,7 +13,8 @@ var express         = require('express'),
     morgan          = require('morgan'),
     mongoose        = require('mongoose'),
     autoIncrement   = require('mongoose-auto-increment'),
-    bodyParser      = require('body-parser'), //for form post
+    bodyParser      = require('body-parser'),             //for form post
+    moment          = require('moment'),                  //getting and handling dates
     _               = require('underscore');
 
 /*Create connection to db*/
@@ -45,6 +46,10 @@ var quoteSchema = new mongoose.Schema({
     quote: {
         type: String,
         required: true
+    },
+    time: {
+        type: String,
+        required: true
     }
 }, {
     toJSON: { //mongoids or mongoversion doesnt need to be shown
@@ -62,10 +67,19 @@ quoteSchema.plugin(autoIncrement.plugin, {model: 'Quote', field: 'quoteId'});
 app.post('/postQuote', function(req, res) {
     //Create new instance of Quote-model, with the sent data (req.body)
     var quote = new Quote(req.body);
+    quote.time = moment(); //sets time of post
+    console.log(quote); //for testing
 
     //Save it
     quote.save(function(err, quote) {
-        res.send(201, _.pick(quote, 'quoteId'));
+        /*res.send(201, _.pick(quote, 'quoteId'));*/
+    });
+});
+
+/*Shows all quotes in db, used for testing*/
+app.get('/quotes', function(req, res) {
+    Quote.find({}, 'quoteId sender place quote time', function(err, quotes) {
+        res.send(quotes);
     });
 });
 

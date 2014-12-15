@@ -10,18 +10,18 @@ body{
 }
 
 @font-face {
-	font-family: paska;
+	font-family: foobar;
 	src: url(./fonts/Sansation-Bold.ttf);
 }
 h1{
 	color: white;
-	font-family: paska;
+	font-family: foobar;
 	text-align: center;
 	font-size: 50px;
 	margin-top: 1.3%;
 }
 @font-face {
-	font-family: ripuli;
+	font-family: barfoo;
 	src: url(./fonts/Sansation-Regular.ttf);
 }
 
@@ -46,7 +46,7 @@ h1{
 
 	color: white;
 	font-size: 23px;
-	font-family: ripuli;
+	font-family: barfoo;
 	transition: color 0.3s, text-shadow 0.3s;
 
 	text-shadow: 1px 1px 2px white;
@@ -75,7 +75,7 @@ h1{
 
 	color: white;
 	font-size: 23px;
-	font-family: ripuli;
+	font-family: barfoo;
 	transition: color 0.3s, text-shadow 0.3s;
 
 	text-shadow: 1px 1px 2px white;
@@ -165,7 +165,7 @@ h1{
 
 	left: 30%;
 	right: auto;
-	font-family: ripuli;
+	font-family: barfoo;
 }
 
 #sender,

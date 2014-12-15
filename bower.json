@@ -1,0 +1,19 @@
+{
+  "name": "luuppiquotes",
+  "version": "0.0.0",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "authors": [
+    "Cihan Bebek"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

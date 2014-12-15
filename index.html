@@ -37,6 +37,7 @@
 			</form>
 		</div>
 		<script type="text/javascript">
+			/*Pressing the New Quote text either puts up the quoteDiv or removes it*/
 			$(document).ready(function(){
 			$("#newQuote").click(function(){
 					if($("#quoteDiv").hasClass("fadeInUp")){
@@ -51,6 +52,7 @@
 			});
 		</script>
 		<script type="text/javascript">
+			/*Pressing the sendQuote button puts away the quoteDiv*/
 			$(document).ready(function(){
 			$("#sendQuote").click(function(){
 					$("#quoteDiv").removeClass("animated fadeInUp");
@@ -59,6 +61,7 @@
 			});
 		</script>
 		<script type="text/javascript">
+			/*Pressing the circle puts away the quoteDiv*/
 			$(document).ready(function(){
 			$("#circle").click(function(){
 					$("#quoteDiv").removeClass("animated fadeInUp");

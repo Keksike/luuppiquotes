@@ -5,8 +5,9 @@
 		<link rel="stylesheet" type="text/css" href="./styles/luuppiquotes.css">
 		<link rel="stylesheet" type="text/css" href="./styles/libs/animate.css">
 		<script type="text/javascript" src="./js/luuppiquotes.js"></script>
-		<script type="text/javascript" src="./js/libs/jquery.js"></script>
-		<script type='text/javascript' src='./js/libs/knockout-3.2.0.js'></script>
+		<script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+		<script type='text/javascript' src='./bower_components/knockout/dist/knockout.js'></script>
+		<script type='text/javascript' src='./bower_components/knockout-js-infinite-scroll/knockout-js-infinite-scroll.js'></script>
 	</head>
 	<body>
 		<h1>LuuppiQuotes</h1>
@@ -20,6 +21,15 @@
 			<input id="search" placeholder="Haku...">
 		</div>
 
+		<ul id="itemsUL" data-bind="foreach: items.infinitescroll.displayItems"  style="display: block; position:absolute; width: 50%; height:50%; overflow-y: auto; background: #ffeeff;">
+			<li class="item" style="display:block; position:relative; height: 20px;">
+				<!-- ko if: $index() >= $root.items.infinitescroll.firstHiddenIndex() -->
+		    	<span data-bind="text: $data"></span>
+				<!-- /ko -->
+			</li>	
+		</ul> 
+
+		
 		<div id="quoteDiv" class="">
 			<div id="circle">
 				<div id="triangle"></div>

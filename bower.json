@@ -1,0 +1,19 @@
+{
+  "name": "root",
+  "version": "0.0.0",
+  "authors": [
+    "Cihan Bebek <cihan.m.bebek@gmail.com>"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

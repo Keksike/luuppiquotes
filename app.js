@@ -29,6 +29,7 @@ app.use( bodyParser.json() );    // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({  // to support URL-encoded bodies
     extended: true
 })); 
+app.use(express.static(path.join(__dirname, '/')));
 
 /*Functionality starts here*/
 var quoteSchema = new mongoose.Schema({
@@ -76,6 +77,16 @@ app.post('/postQuote', function(req, res) {
     });
 });
 
+/*Gets a single quote with its Id*/
+app.get('/quotes/:id', function(req, res) {
+    Quote.findOne({ quoteId: req.params.id }, function(err, quote) {
+        if(quote == null) {
+             return res.send(404, 'Quote not found!');
+        }
+        res.send(quote);
+    });
+});
+
 /*Shows all quotes in db, used for testing*/
 app.get('/quotes', function(req, res) {
     Quote.find({}, 'quoteId sender place quote time', function(err, quotes) {
@@ -83,6 +94,6 @@ app.get('/quotes', function(req, res) {
     });
 });
 
-http.createServer(app).listen(app.get('port'), function () {
+http.createServer(app).listen(app.get('port'), function (req, res) {
     console.log("Listening on port " + app.get('port'));
 })

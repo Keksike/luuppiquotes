@@ -3,27 +3,26 @@ html, body{
 	padding: 0;
 }
 body{
-	height: 1300px;
-	background-image:url(./images/use_your_illusion.png);
+	background-image:url(use_your_illusion.png);
 	background-repeat:repeat;
+	width: 100%;
+	height: 100%;
 }
 
 @font-face {
-	font-family: foobarBold;
-	src: url(./fonts/Sansation-Bold.ttf);
+	font-family: paska;
+	src: url(Sansation-Bold.ttf);
 }
-@font-face {
-	font-family: foobar;
-	src: url(./fonts/Sansation-Regular.ttf);
-}
-
-
 h1{
 	color: white;
-	font-family: foobarBold;
+	font-family: paska;
 	text-align: center;
 	font-size: 50px;
 	margin-top: 1.3%;
+}
+@font-face {
+	font-family: ripuli;
+	src: url(Sansation-Regular.ttf);
 }
 
 #controls{
@@ -47,7 +46,7 @@ h1{
 
 	color: white;
 	font-size: 23px;
-	font-family: foobar;
+	font-family: ripuli;
 	transition: color 0.3s, text-shadow 0.3s;
 
 	text-shadow: 1px 1px 2px white;
@@ -76,7 +75,7 @@ h1{
 
 	color: white;
 	font-size: 23px;
-	font-family: foobar;
+	font-family: ripuli;
 	transition: color 0.3s, text-shadow 0.3s;
 
 	text-shadow: 1px 1px 2px white;
@@ -85,7 +84,7 @@ h1{
 #controls div:hover{
 	color: grey;
 	cursor: pointer;
-	text-shadow: 0.3px 0.3px 0.3px black;
+	text-shadow: 0.5px 0.5px 0.5px black;
 }
 
 #searchDiv{
@@ -108,59 +107,9 @@ h1{
 	box-shadow: 0px 0px 20px white;
 }
 
-/*CSS for section with quoteslist*/
-#quotes{
-	z-index: 2;
-
-	margin-top: 50px;
-	margin-left: auto;
-	margin-right: auto;
-
-/*	border-style: solid; */
-	width: 60%;
-	height: 100%;
-}
-
-/*Div of a single quote*/
-#quote1{
-	display: inline-block;
-	margin: 1em;
-
-	width: 90%;
-	height: auto;
-
-	color: white;
-	font-family: foobar;
-}
-
-#quote1 p{
-	display: inline;
-}
-
-#quote1 #quotePlace{
-	color: yellow;
-}
-
-#line{
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 2%;
-	margin-bottom: 5px;
-
-	width: 100%;
-	height: 1px;
-	background-color: white;
-
-	box-shadow: 0px 0px 5px white;
-}
-
-
-/*Div for sending new quotes*/
 #quoteDiv{
-	z-index: 5;
-
-	background: rgba(20,20,20,0.9);
-	position: fixed;
+	background: rgba(1,1,1,0.4);
+	position: absolute;
 	visibility: hidden;
 	bottom: 0px;
 	width: 100%;
@@ -208,7 +157,7 @@ h1{
 }
 
 #quoteForm{
-	color: white ;
+	color: #B8B8B8 ;
 	display: block;
 	width: 350px;
 	bottom: 0px;
@@ -216,7 +165,7 @@ h1{
 
 	left: 30%;
 	right: auto;
-	font-family: barfoo;
+	font-family: ripuli;
 }
 
 #sender,

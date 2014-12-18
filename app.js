@@ -79,9 +79,11 @@ app.post('/postQuote', function(req, res) {
 
 /*Gets a single quote with its Id*/
 app.get('/quotes/:id', function(req, res) {
+
     Quote.findOne({ quoteId: req.params.id }, function(err, quote) {
         if(quote == null) {
-             return res.send(404, 'Quote not found!');
+            /*gotta make errorhandling better*/
+            return res.send(404, 'Quote not found!');
         }
         res.send(quote);
     });

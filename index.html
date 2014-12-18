@@ -32,7 +32,7 @@
 			</div>
 			<div id="line">
 			<div id="quote1">
-				Lähettäjä: <p id="quoteSender">pj_himmanen</p><br>
+				Lähettäjä: <p id="quoteSender" data-bind="text: sender"></p><br>
 				@ <p id="quotePlace">#mita_tekee_hallitus_2015_kun_ei_saatana_mitään_tapahdu_paska_paska_paska_hallitus</p><br><br>
 				<p id="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.</p>
 			</div>
@@ -97,18 +97,27 @@ Nam molestie nec tortor. Donec placerat leo sit amet velit. Vestibulum id justo 
 				});
 			});
 		</script>
+
 		<!-- For reading form info and sending to node -->
 		<script type="text/javascript">
 			$("quoteForm").submit(function(e) {
 				e.preventDefault(); // Prevents the page from refreshing
-				var $this = $(this); // `this` refers to the current form element
+				var $this = $(this);
 				$.post(
-					$this.attr("action"), // Gets the URL to sent the post to
-					$this.serialize(), // Serializes form data in standard format
+					$this.attr("action"),
+					$this.serialize(),
 					function(data) { /** code to handle response **/ },
 					"json" // The format the response should be in
 				);
 			});
+		</script>
+
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$.get( "/quotes/12", function( data ) {
+				$( "#quoteSender" ).append(data.sender); //  2pm
+			}, "json" );
+		});
 		</script>
 	</body>
 </html>

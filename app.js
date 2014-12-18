@@ -73,7 +73,7 @@ app.post('/postQuote', function(req, res) {
 
     //Save it
     quote.save(function(err, quote) {
-        /*res.send(201, _.pick(quote, 'quoteId'));*/
+        res.send(201, 'Tapahtui virhe Quotea lähettäessä.');
     });
 });
 

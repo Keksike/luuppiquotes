@@ -2,12 +2,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>LuuppiQuotes</title>
-		<link rel="stylesheet" type="text/css" href="./styles/luuppiquotes.css">
-		<link rel="stylesheet" type="text/css" href="./styles/libs/animate.css">
-		<script type="text/javascript" src="./js/luuppiquotes.js"></script>
+		<!-- bower modules -->
 		<script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
 		<script type='text/javascript' src='./bower_components/knockout/dist/knockout.js'></script>
-		<script type='text/javascript' src='./bower_components/knockout-js-infinite-scroll/knockout-js-infinite-scroll.js'></script>
+
+		<!-- Page JS -->
+		<script type="text/javascript" src="./js/sendQuote.js"></script>
+		<script type="text/javascript" src="./js/getQuotes.js"></script>
+
+		<!-- CSS modules -->
+		<link rel="stylesheet" type="text/css" href="./styles/libs/animate.css">
+
+		<!-- Page JS -->
+		<link rel="stylesheet" type="text/css" href="./styles/luuppiquotes.css">
 	</head>
 	<body>
 		<h1>LuuppiQuotes</h1>
@@ -20,24 +27,24 @@
 		</div>
 		<!-- Search for quotes -->
 		<div id="searchdiv">
-			<input id="search" placeholder="Haku...">
+			<input id="search" placeholder="Haku... W.I.P.">
 		</div>
 
 		<!-- Main section of the page, used to show the quotes -->
 		<section id="quotes">
-			<div id="quote1">
+			<div id="quoteDiv">
 				Lähettäjä: <p id="quoteSender">viljamin veli</p><br>
 				@ <p id="quotePlace">joku mesta</p><br><br>
 				<p id="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.</p>
 			</div>
 			<div id="line">
-			<div id="quote1">
+			<div id="quoteDiv">
 				Lähettäjä: <p id="quoteSender" data-bind="text: sender"></p><br>
-				@ <p id="quotePlace">#mita_tekee_hallitus_2015_kun_ei_saatana_mitään_tapahdu_paska_paska_paska_hallitus</p><br><br>
+				@ <p id="quotePlace">#mita_tekee_hallitus_2015_kun_ei_saatana_mitään_tapahdu</p><br><br>
 				<p id="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.</p>
 			</div>
 			<div id="line">
-			<div id="quote1">
+			<div id="quoteDiv">
 				Lähettäjä: <p id="quoteSender">ossi perkele</p><br>
 				@ <p id="quotePlace">toimisto</p><br><br>
 				<p id="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor. Mauris sed libero. Suspendisse facilisis nulla in lacinia laoreet, lorem velit accumsan velit vel mattis libero nisl et sem. Proin interdum maecenas massa turpis sagittis in, interdum non lobortis vitae massa. Quisque purus lectus, posuere eget imperdiet nec sodales id arcu. Vestibulum elit pede dictum eu, viverra non tincidunt eu ligula.
@@ -48,7 +55,7 @@ Nam molestie nec tortor. Donec placerat leo sit amet velit. Vestibulum id justo 
 
 
 		<!-- Div for sending new quotes -->
-		<div id="quoteDiv" class="">
+		<div id="quoteSendDiv" class="">
 			<div id="circle">
 				<div id="triangle"></div>
 			</div>
@@ -64,58 +71,12 @@ Nam molestie nec tortor. Donec placerat leo sit amet velit. Vestibulum id justo 
 				<input id="sendQuote" value="Lähetä" type="submit">
 			</form>
 		</div>
-		<script type="text/javascript">
-			/*Pressing the New Quote text either puts up the quoteDiv or removes it*/
-			$(document).ready(function(){
-			$("#newQuote").click(function(){
-					if($("#quoteDiv").hasClass("fadeInUp")){
-						$("#quoteDiv").removeClass("animated fadeInUp");
-						$("#quoteDiv").addClass("animated fadeOutDown");
-					}else{
-						$("#quoteDiv").removeClass("animated fadeOutDown");
-						$("#quoteDiv").css("visibility", "visible");
-						$("#quoteDiv").addClass("animated fadeInUp");
-					}
-				});
-			});
-		</script>
-		<script type="text/javascript">
-			/*Pressing the sendQuote button puts away the quoteDiv*/
-			$(document).ready(function(){
-			$("#sendQuote").click(function(){
-					$("#quoteDiv").removeClass("animated fadeInUp");
-					$("#quoteDiv").addClass("animated fadeOutDown");
-				});
-			});
-		</script>
-		<script type="text/javascript">
-			/*Pressing the circle puts away the quoteDiv*/
-			$(document).ready(function(){
-			$("#circle").click(function(){
-					$("#quoteDiv").removeClass("animated fadeInUp");
-					$("#quoteDiv").addClass("animated fadeOutDown");
-				});
-			});
-		</script>
-
-		<!-- For reading form info and sending to node -->
-		<script type="text/javascript">
-			$("quoteForm").submit(function(e) {
-				e.preventDefault(); // Prevents the page from refreshing
-				var $this = $(this);
-				$.post(
-					$this.attr("action"),
-					$this.serialize(),
-					function(data) { /** code to handle response **/ },
-					"json" // The format the response should be in
-				);
-			});
-		</script>
 
 		<script type="text/javascript">
 		$(document).ready(function(){
-			$.get( "/quotes/12", function( data ) {
-				$( "#quoteSender" ).append(data.sender); //  2pm
+			var id;
+			$.get( ("/quotes/" + "12"), function( data ) {
+				$( "#quoteSender" ).append(data.sender);
 			}, "json" );
 		});
 		</script>

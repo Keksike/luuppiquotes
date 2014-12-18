@@ -1,0 +1,4 @@
+/*Getting the quotes*/
+$(function(){
+
+});

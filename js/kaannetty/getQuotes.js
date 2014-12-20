@@ -1,0 +1,1 @@
+console.error("Error: Parsing file C:\\Users\\Cihan\\Desktop\\projua\\luuppiquotes\\js\\getQuotes.js: Unexpected token (23:19)")

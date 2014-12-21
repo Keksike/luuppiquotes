@@ -7,15 +7,7 @@ var $ = require('jquery');
 
 
 //used for storing id's
-var quoteIdCounter = 7;
-
-/*function increaseHeight(){
-    var heightNow = $('body').height();
-    heightNow = heightNow + 500;
-    $('body').height(heightNow);
-};
-
-var throttledIncreaseHeight = _.throttle(increaseHeight, 1000);*/
+var quoteIdCounter = 0;
 
 /*amount = amount of fetched quotes and created quoteDivs*/
 function getQuotes(amount){
@@ -57,8 +49,8 @@ $(function(){
     var hContent = $("body").height();
     var hWindow = $(window).height();
 
-    if(hContent<=hWindow){
-        _.throttle(getQuotes(5), 1000);
+    while(hContent<=hWindow){
+        _.throttle(getQuotes(1), 1000);
     }
 });
 

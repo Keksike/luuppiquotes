@@ -9,7 +9,7 @@
 		<!-- JS for sending new quotes -->
 		<script type="text/javascript" src="./js/sendQuote.js"></script>
 		<!-- JS for requiring quotes from db to front, translated by watchify -->
-		<script type="text/javascript" src=".\js\kaannetty\.getQuotes.js"></script> 
+		<script type="text/javascript" src=".\js\kaannetty\getQuotes.js"></script> 
 
 		<!-- CSS modules -->
 		<link rel="stylesheet" type="text/css" href="./styles/libs/animate.css">
@@ -18,50 +18,22 @@
 		<link rel="stylesheet" type="text/css" href="./styles/luuppiquotes.css">
 	</head>
 	<body>
-		<h1>LuuppiQuotes</h1>
+		<h1>Quotes</h1>
 
 		<!-- Top controls -->
 		<div id="controls">
-			<div id="newQuote" type="button"><p>Uusi Quote</p></div>
+			<div id="newQuote" type="button"><p>New Quote</p></div>
 			<div id="tikku"></div>
-			<div id="best" type="button"><p>Parhaat</p></div><br>
+			<div id="best" type="button"><p>Top Quotes</p></div><br>
 		</div>
 		<!-- Search for quotes -->
 		<div id="searchdiv">
-			<input id="search" placeholder="Haku... W.I.P.">
+			<input id="search" placeholder="Search... W.I.P.">
 		</div>
 
 		<!-- Main section of the page, used to show the quotes -->
 		<section id="quotes">
-			<div class="line">
-			<div class="quoteDiv">
-				Lähettäjä: <p class="quoteSender">viljamin veli</p><br>
-				@ <p class="quotePlace">joku mesta</p><br><br>
-				<p class="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincclassunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat class blandit sit amet tortor.</p>
-			</div>
-			<div class="line">
-			<div class="quoteDiv">
-				Lähettäjä: <p class="quoteSender" data-bind="text: sender"></p><br>
-				@ <p class="quotePlace">#mita_tekee_hallitus_2015_kun_ei_saatana_mitään_tapahdu</p><br><br>
-				<p class="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincclassunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat class blandit sit amet tortor.</p>
-			</div>
-			<div class="line">
-			<div class="quoteDiv">
-				Lähettäjä: <p class="quoteSender">ossi perkele</p><br>
-				@ <p class="quotePlace">toimisto</p><br><br>
-				<p class="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor. Mauris sed libero. Suspendisse facilisis nulla in lacinia laoreet, lorem velit accumsan velit vel mattis libero nisl et sem. Proin interdum maecenas massa turpis sagittis in, interdum non lobortis vitae massa. Quisque purus lectus, posuere eget imperdiet nec sodales id arcu. Vestibulum elit pede dictum eu, viverra non tincidunt eu ligula.
 
-Nam molestie nec tortor. Donec placerat leo sit amet velit. Vestibulum id justo ut vitae massa. Proin in dolor mauris consequat aliquam. Donec ipsum, vestibulum ullamcorper venenatis augue. Aliquam tempus nisi in auctor vulputate, erat felis pellentesque augue nec, pellentesque lectus justo nec erat. Aliquam et nisl. Quisque sit amet dolor in justo pretium condimentum.</p>
-			</div>
-			<div class="line">
-						<div class="quoteDiv">
-				Lähettäjä: <p class="quoteSender">ossi perkele</p><br>
-				@ <p class="quotePlace">toimisto</p><br><br>
-				<p class="quoteQuote">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor. Mauris sed libero. Suspendisse facilisis nulla in lacinia laoreet, lorem velit accumsan velit vel mattis libero nisl et sem. Proin interdum maecenas massa turpis sagittis in, interdum non lobortis vitae massa. Quisque purus lectus, posuere eget imperdiet nec sodales id arcu. Vestibulum elit pede dictum eu, viverra non tincidunt eu ligula.
-
-Nam molestie nec tortor. Donec placerat leo sit amet velit. Vestibulum id justo ut vitae massa. Proin in dolor mauris consequat aliquam. Donec ipsum, vestibulum ullamcorper venenatis augue. Aliquam tempus nisi in auctor vulputate, erat felis pellentesque augue nec, pellentesque lectus justo nec erat. Aliquam et nisl. Quisque sit amet dolor in justo pretium condimentum.</p>
-			</div>
-			<div class="line">
 		</section>
 
 
@@ -72,24 +44,15 @@ Nam molestie nec tortor. Donec placerat leo sit amet velit. Vestibulum id justo 
 			</div>
 
 			<form id="quoteForm" action="http://127.0.0.1:3000/postQuote" method="post">
-				Lähettäjä:<br>
+				Sender (this will be removed and replaced by autofetching sender):<br>
 				<input id="sender" type="text" name="sender" maxlength="30"><br>
 
-				Sijainti/kanava:<br><input id="place" type="text" name="place" maxlength="40"><br>
+				Location/channel:<br><input id="place" type="text" name="place" maxlength="40"><br>
 
 				Quote: <br><textarea id="quote" rows="4" cols="50" name="quote"></textarea><br>
 
-				<input id="sendQuote" value="Lähetä" type="submit">
+				<input id="sendQuote" value="Send" type="submit">
 			</form>
 		</div>
-
-		<script type="text/javascript">
-		$(document).ready(function(){
-			var id;
-			$.get( ("/quotes/" + "12"), function( data ) {
-				$( "#quoteSender" ).append(data.sender);
-			}, "json" );
-		});
-		</script>
 	</body>
 </html>

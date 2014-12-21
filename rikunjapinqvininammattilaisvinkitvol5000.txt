@@ -1,0 +1,54 @@
+22:39:32 <@riku> ja sit sun pit‰‰ saada se tehtyy sillee ettei se ala lataamaan lis‰‰ ennenku vanhat on ladannu vaikka
+                 scrollattaiski
+22:39:32 < Keksike> toimiiks se sit sillee et mul on se container sectioni height: autolla
+22:39:46 <@riku> joo
+22:39:56 <@riku> tai no ei ees tarvi v‰ltt‰m‰tt‰
+22:40:06 <@riku> riippuu miten haluat sun leiskassa sen vaa
+22:40:12 <@riku> ku voithan  s‰ niinku sivua venytt‰‰ vaa loputtomiin
+22:40:18 <@riku> niinku se normaalistikki toimii
+22:41:11 <@riku> https://lodash.com/docs#debounce
+22:41:11 < botti> † Lo-Dash documentation
+22:41:17 <@riku> s‰ haluat k‰ytt‰‰ varmaan tota
+22:41:38 <@riku> jolla s‰ voit teh‰ siis sillee ett‰
+22:42:00 <@riku> _.debounce(funktioJokaLataaJaLaittaaTavaratDomiin, 1000);
+22:42:24 <@riku> ja ton tulos viel johonki muuttujaan
+22:42:36 < Keksike> mit‰ se palauttaa siis
+22:42:39 <@riku> vaikka "foobar" eli var foobar = _.debounce(...
+22:42:43 <@riku> se palauttaa uuden funktion
+22:42:48 <@riku> joka on sellanen, ett‰ jos m‰ nyt kutsun
+22:42:51 <@riku> foobar()
+22:42:57 <@riku> nii 1000 ms laskuri l‰htee k‰yntiin
+22:42:59 < Keksike> aa et se kerkee hakee ne datat?
+22:43:12 < Keksike> tietokannasta
+22:43:13 < Keksike> vai
+22:43:15 <@riku> ja jos tota funktiota ei kutsuta uudelleen nii se kutsuu tota alkuper‰st‰ funktiota sekunnin p‰‰st‰
+22:43:23 <@riku> mut jos kutsutaan nii l‰htˆlaskenta alkaa alusta
+22:43:26 <@riku> jep
+22:43:36 < Keksike> oolrait
+22:43:40 <@riku> mut ootas
+22:43:44 <@riku> et s‰ ehk‰ haluakkaan teh‰ sit‰ noin
+22:43:48 < Pinqvin> mut mit‰ jos k‰ytt‰j‰ vaa scrollaa iha vitusti alas
+22:43:52 < Pinqvin> timeri nollautuu kokoaja
+22:44:04 < Keksike> :D
+22:44:07 <@riku> jep mut joku tollanen on niinku 100% pakko olla
+22:44:14 <@riku> koska joissain selaimissa tulee scroll eventit sillee
+22:44:19 < Keksike> paitsi jos hakee yks kerrallaa niit‰ quotei?
+22:44:19 < Pinqvin> joo siis et s‰ halua kokoajan niit hakuja sinne kantaa teh‰
+22:44:23 <@riku> ett‰ se itse event laukeaa vasta ku se scrollaus loppuu
+22:44:33 <@riku> mutta joissain esim chromessa se tulee niinku v‰h‰ niinku streamina
+22:44:51 <@riku> s‰ haluat teh‰ sellasen funktion
+22:44:56 < Keksike> eiks Pinqvin ton ongelman voi ratkasta sillee et jos se 1sec on viel k‰ynniss‰ nii ei voi launchata uutta
+                    kutsua
+22:45:02 <@riku> jota voi kutsua uudelleen vasta sitten ku se funktio on saanu sen uuden tiedon haettua
+22:45:31 < Keksike> juu
+22:45:52 <@riku> s‰ niinku tarvisit  https://lodash.com/docs#throttle
+22:45:52 < botti> † Lo-Dash documentation
+22:45:53 <@riku> ton
+22:45:54 < Keksike> eli iha vaa lippumuuttuja et onkoHaettuEdellisetSetit
+22:46:07 <@riku> mutta sellasena ett‰ sille vois antaa jonku callbackin jolla ilmottaa millon sun tekem‰ ajax juttu on vlamis
+22:46:09 < Keksike> jooh
+22:46:10 <@riku> jep
+22:46:12 <@riku> se on varmaa paras tapa
+22:46:18 < Keksike> oolrait
+22:46:21 < Keksike> khuul
+22:47:06 <@riku> mut olis ollu siistimp‰‰ teh‰ jollai tollasella funktiolla :D

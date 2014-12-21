@@ -83,7 +83,7 @@ app.get('/quotes/:id', function(req, res) {
     Quote.findOne({ quoteId: req.params.id }, function(err, quote) {
         if(quote == null) {
             /*gotta make errorhandling better*/
-            return res.send(404, 'Quote not found!');
+            return res.send(404, 'Quotea ei löytynyt!');
         }
         res.send(quote);
     });

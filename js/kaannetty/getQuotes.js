@@ -9,27 +9,26 @@ var _ = require('lodash');
 var $ = require('jquery');
 
 
-//used for storing id's
-var quoteIdCounter = 7;
+// tells us which id we last checked
+var quoteIdCounter = 0;
 
-/*function increaseHeight(){
-    var heightNow = $('body').height();
-    heightNow = heightNow + 500;
-    $('body').height(heightNow);
-};
-
-var throttledIncreaseHeight = _.throttle(increaseHeight, 1000);*/
-
-/*amount = amount of fetched quotes and created quoteDivs*/
+/* amount = amount of fetched quotes and created quoteDivs */
 function getQuotes(amount){
     for (var i = 0; i < amount; i++) {
+        // setTimeout to fix spamming down, I guess. Just worried about lag in node/db
         setTimeout(function(){
+
+            // gets a single quote with given id (autoincremented) from db
+            // I have to change this into time-based to get rid of useless gets
             $.get(("/quotes/" + quoteIdCounter), function(data) {
-                if(data != null){
+                if(data != null){ //if we found a quote with id
+
+                    // gotta do something about this mess of a code. 
+                    // should probably move it to another function too.
                     var lineString = $('<div class="line"></div>');
                     var quoteString = $('<div class="quoteDiv">' 
                                             + '<p class="time">' + data.time + '</p>' + '<br>'
-                                            + 'Sender: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
+                                            + 'Lähettäjä: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
                                             + '@ <p class="quotePlace">' + data.place + '</p>' + '<br>' + '<br>'
                                             + '<p class="quoteQuote">' + data.quote + '</p>' + '<br>'
                                         + '</div>')
@@ -37,37 +36,28 @@ function getQuotes(amount){
                     $("#quotes").append(quoteString);
                 }
             }, "json" );
+            // increments no matter if we found quote or not
             quoteIdCounter++;
         }, 500);
     };
 };
 
-function checkScrollBar() {
-    var hContent = $("body").height(); // get the height of your content
-    var hWindow = $(window).height();  // get the height of the visitor's browser window
 
-    // if the height of your content is bigger than the height of the 
-    // browser window, we have a scroll bar
-    if(hContent>hWindow) { 
-        return true;    
-    }
-
-    return false;
-}
-
-/*when page loads, make sure to load some quotes*/
+/* when page loads, make sure to load some quotes
+   I'm fairly sure that theres a better/faster way of doing this, but this seems safe and it works so meh.*/
 $(function(){
     var hContent = $("body").height();
     var hWindow = $(window).height();
 
-    if(hContent<=hWindow){
-        _.throttle(getQuotes(5), 1000);
+    // loads single quotes until we have a scroll bar
+    while(hContent<=hWindow){
+        _.throttle(getQuotes(1), 1000);
     }
 });
 
-/*gets quotes when scrolling page down*/
+/* gets quotes when scrolling page down */
 window.onscroll = function() {
-    //when scrolling page checks if you've hit the bottom
+    // when scrolling page checks if you've hit the bottom
     if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)) {
         _.throttle(getQuotes(5), 1000);
     }

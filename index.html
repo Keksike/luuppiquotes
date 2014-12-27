@@ -18,13 +18,13 @@
 		<link rel="stylesheet" type="text/css" href="./styles/luuppiquotes.css">
 	</head>
 	<body>
-		<h1>Quotes</h1>
+		<h1>LuuppiQuotes</h1>
 
 		<!-- Top controls -->
 		<div id="controls">
-			<div id="newQuote" type="button"><p>New Quote</p></div>
+			<div id="newQuote" type="button"><p>Uusi Quote</p></div>
 			<div id="tikku"></div>
-			<div id="best" type="button"><p>Top Quotes</p></div><br>
+			<div id="best" type="button"><p>Parhaat</p></div><br>
 		</div>
 		<!-- Search for quotes -->
 		<div id="searchdiv">
@@ -32,10 +32,7 @@
 		</div>
 
 		<!-- Main section of the page, used to show the quotes -->
-		<section id="quotes">
-
-		</section>
-
+		<section id="quotes"></section>
 
 		<!-- Div for sending new quotes -->
 		<div id="quoteSendDiv" class="">
@@ -44,10 +41,10 @@
 			</div>
 
 			<form id="quoteForm" action="http://127.0.0.1:3000/postQuote" method="post">
-				Sender (this will be removed and replaced by autofetching sender):<br>
+				Lähettäjä (tämä ominaisuus poistetaan ja korvataan käyttäjillä):<br>
 				<input id="sender" type="text" name="sender" maxlength="30"><br>
 
-				Location/channel:<br><input id="place" type="text" name="place" maxlength="40"><br>
+				Paikka/kanava:<br><input id="place" type="text" name="place" maxlength="40"><br>
 
 				Quote: <br><textarea id="quote" rows="4" cols="50" name="quote"></textarea><br>
 

@@ -12,8 +12,11 @@ var quoteIdCounter = 0;
 /* amount = amount of fetched quotes and created quoteDivs */
 function getQuotes(amount){
     for (var i = 0; i < amount; i++) {
-        setTimeout(function(){ // setTimeout to fix spamming down, I guess. Just worried about lag in node/db
-            //gets a single quote with given id (autoincremented) from db
+        // setTimeout to fix spamming down, I guess. Just worried about lag in node/db
+        setTimeout(function(){
+
+            // gets a single quote with given id (autoincremented) from db
+            // I have to change this into time-based to get rid of useless gets
             $.get(("/quotes/" + quoteIdCounter), function(data) {
                 if(data != null){ //if we found a quote with id
 
@@ -22,7 +25,7 @@ function getQuotes(amount){
                     var lineString = $('<div class="line"></div>');
                     var quoteString = $('<div class="quoteDiv">' 
                                             + '<p class="time">' + data.time + '</p>' + '<br>'
-                                            + 'Sender: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
+                                            + 'Lähettäjä: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
                                             + '@ <p class="quotePlace">' + data.place + '</p>' + '<br>' + '<br>'
                                             + '<p class="quoteQuote">' + data.quote + '</p>' + '<br>'
                                         + '</div>')
@@ -45,6 +48,8 @@ $(function(){
 
     // loads single quotes until we have a scroll bar
     while(hContent<=hWindow){
+        //Throttle means that it will call the function max every 1000ms
+        //aka you can't "spam" quotes
         _.throttle(getQuotes(1), 1000);
     }
 });
@@ -53,6 +58,8 @@ $(function(){
 window.onscroll = function() {
     // when scrolling page checks if you've hit the bottom
     if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)) {
+        //Throttle means that it will call the function max every 1000ms
+        //aka you can't "spam" quotes
         _.throttle(getQuotes(5), 1000);
     }
 };

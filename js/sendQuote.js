@@ -27,6 +27,7 @@ $(function(){
     $("quoteForm").submit(function(e) {
         e.preventDefault(); // Prevents the page from refreshing
         var $this = $(this);
+
         $.post(
             $this.attr("action"),
             $this.serialize(),

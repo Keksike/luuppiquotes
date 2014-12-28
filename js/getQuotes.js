@@ -7,12 +7,13 @@ var $ = require('jquery');
 
 
 // tells us which id we last checked
-var quoteIdCounter = 0;
+var quoteIdCounter = 7;
 
 /* amount = amount of fetched quotes and created quoteDivs */
 function getQuotes(amount){
     for (var i = 0; i < amount; i++) {
         // setTimeout to fix spamming down, I guess. Just worried about lag in node/db
+        // gotta find a better way of doing this too
         setTimeout(function(){
 
             // gets a single quote with given id (autoincremented) from db
@@ -28,7 +29,7 @@ function getQuotes(amount){
                                             + 'Lähettäjä: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
                                             + '@ <p class="quotePlace">' + data.place + '</p>' + '<br>' + '<br>'
                                             + '<p class="quoteQuote">' + data.quote + '</p>' + '<br>'
-                                        + '</div>')
+                                        + '</div>');
                     $("#quotes").append(lineString);
                     $("#quotes").append(quoteString);
                 }
@@ -48,9 +49,9 @@ $(function(){
 
     // loads single quotes until we have a scroll bar
     while(hContent<=hWindow){
-        //Throttle means that it will call the function max every 1000ms
-        //aka you can't "spam" quotes
-        _.throttle(getQuotes(1), 1000);
+        // Throttle means that it will call the function max every 1000ms
+        // aka you can't "spam" quotes
+        _.throttle(getQuotes(10), 0);
     }
 });
 
@@ -58,8 +59,8 @@ $(function(){
 window.onscroll = function() {
     // when scrolling page checks if you've hit the bottom
     if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)) {
-        //Throttle means that it will call the function max every 1000ms
-        //aka you can't "spam" quotes
+        // Throttle means that it will call the function max every 1000ms
+        // aka you can't "spam" quotes
         _.throttle(getQuotes(5), 1000);
     }
 };

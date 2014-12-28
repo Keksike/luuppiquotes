@@ -68,12 +68,14 @@ quoteSchema.plugin(autoIncrement.plugin, {model: 'Quote', field: 'quoteId'});
 app.post('/postQuote', function(req, res) {
     //Create new instance of Quote-model, with the sent data (req.body)
     var quote = new Quote(req.body);
+    //replaces \r and \n to <br> so it can be used in <p>
+    quote.quote = quote.quote.replace(/\r?\n/g,"<br>");
     quote.time = moment(); //sets time of post
     console.log(quote); //for testing
 
     //Save it
     quote.save(function(err, quote) {
-        res.send(201, 'Tapahtui virhe Quotea lähettäessä.');
+        /*res.send(404, 'error.');*/
     });
 });
 

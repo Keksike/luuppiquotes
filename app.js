@@ -15,6 +15,8 @@ var express         = require('express'),
     autoIncrement   = require('mongoose-auto-increment'),
     bodyParser      = require('body-parser'),             //for form post
     moment          = require('moment'),                  //getting and handling dates
+
+    passport        = require('passport'),
     _               = require('underscore');
 
 /*Create connection to db*/
@@ -49,8 +51,8 @@ var quoteSchema = new mongoose.Schema({
         required: true
     },
     time: {
-        type: String,
-        required: true
+        type: Number,
+        default: Date.now()
     }
 }, {
     toJSON: { //mongoids or mongoversion doesnt need to be shown
@@ -70,7 +72,6 @@ app.post('/postQuote', function(req, res) {
     var quote = new Quote(req.body);
     //replaces \r and \n to <br> so it can be used in <p>
     quote.quote = quote.quote.replace(/\r?\n/g,"<br>");
-    quote.time = moment(); //sets time of post
     console.log(quote); //for testing
 
     //Save it
@@ -79,17 +80,75 @@ app.post('/postQuote', function(req, res) {
     });
 });
 
-/*Gets a single quote with its Id*/
-app.get('/quotes/:id', function(req, res) {
+/*Gets a single quote, which is the next newest one of "timeNow"*/
+app.get('/quotes/:timeNow', function(req, res) {
 
-    Quote.findOne({ quoteId: req.params.id }, function(err, quote) {
-        if(quote == null) {
-            /*gotta make errorhandling better*/
-            return res.send(404, 'Quotea ei löytynyt!');
+    var aika = parseInt(req.params.timeNow);
+    console.log(aika);
+
+    Quote.find().sort({time: -1}).findOne({time: {$lt: aika}}, function(err, quote){
+        if(err){
+            console.log(err);
+            return res.status(500).send("jotain meni pieleen");
         }
+        if(!quote){
+            return res.status(404).send("quotea ei löytynyt");
+        }
+
         res.send(quote);
     });
 });
+
+/*Gets n (where n = amount) quotes, starting from next newest of timeNow*/
+app.get('/quotes', function(req, res) {
+    var time;
+    var amount = 1;
+
+    if(req.params.time != null){
+        time = parseInt(req.params.time);
+    }else{
+        console.log("timea ei annettu!");
+        return null;
+    }
+
+    if(req.params.limit){
+        amount = parseInt(req.params.amount);
+    }else{
+        console.log("Määrää ei annettu!");
+    }
+    console.log(amount);
+    console.log(time);
+
+    //first sorts quotes newest to oldest
+    //then finds the top n (where n = req.params.amount) quotes, where time < req.params.timeNow
+    Quote.find().sort({time: -1}).find({time: {$lt: time}}).limit(amount, function(err, quote){
+        if(err){
+            console.log(err);
+            return res.status(500).send("Jotain meni pieleen!");
+        }
+        if(!quote){
+            return res.status(404).send("Quoteja ei löytynyt!");
+        }
+
+        res.send(quote);
+    });
+});
+
+
+/*    Quote.find({}).sort({ _id: -1}).limit(1).toArray(function(err, docs){
+        if(docs != null){
+            console.log(err);
+            res.send(docs);
+        }
+    });*/
+    //sorts the quotes into newest -> oldest, and gets 1 quote
+/*    Quote.find({}, {}, {sort: {'quoteId' : -1}}, function(err, quote) {
+        if(quote == null) {
+            gotta make errorhandling better
+            return res.send(404, 'Quotea ei löytynyt!');
+        }
+        res.send(quote);
+    });*/
 
 /*Shows all quotes in db, used for testing*/
 app.get('/quotes', function(req, res) {

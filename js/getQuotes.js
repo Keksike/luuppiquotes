@@ -1,45 +1,61 @@
-var h = require('virtual-dom/h');
-var diff = require('virtual-dom/diff');
-var patch = require('virtual-dom/patch');
-var createElement = require('virtual-dom/create-element');
-var _ = require('lodash');
-var $ = require('jquery');
+var h = require('virtual-dom/h'),
+    diff = require('virtual-dom/diff'),
+    patch = require('virtual-dom/patch'),
+    createElement = require('virtual-dom/create-element'),
+    _ = require('lodash'),
+    $ = require('jquery'),
+    moment = require('moment'); 
 
 
 // tells us which id we last checked
-var quoteIdCounter = 7;
+var prevTime = moment();
+var lol = 0;
 
 /* amount = amount of fetched quotes and created quoteDivs */
-function getQuotes(amount){
-    for (var i = 0; i < amount; i++) {
-        // setTimeout to fix spamming down, I guess. Just worried about lag in node/db
-        // gotta find a better way of doing this too
-        setTimeout(function(){
-
-            // gets a single quote with given id (autoincremented) from db
-            // I have to change this into time-based to get rid of useless gets
-            $.get(("/quotes/" + quoteIdCounter), function(data) {
-                if(data != null){ //if we found a quote with id
-
-                    // gotta do something about this mess of a code. 
-                    // should probably move it to another function too.
-                    var lineString = $('<div class="line"></div>');
-                    var quoteString = $('<div class="quoteDiv">' 
-                                            + '<p class="time">' + data.time + '</p>' + '<br>'
-                                            + 'Lähettäjä: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
-                                            + '@ <p class="quotePlace">' + data.place + '</p>' + '<br>' + '<br>'
-                                            + '<p class="quoteQuote">' + data.quote + '</p>' + '<br>'
-                                        + '</div>');
-                    $("#quotes").append(lineString);
-                    $("#quotes").append(quoteString);
-                }
-            }, "json" );
-            // increments no matter if we found quote or not
-            quoteIdCounter++;
-        }, 500);
-    };
+function getNextQuotes(prevTime, amount){
+    $.get("/quotes", {limit: amount, time: prevTime}).done(function(data){
+        if(data !=  null){
+            for(var key in data){
+                constructQuoteElement(data[key]);
+            }
+        }
+    }, "json" );
 };
 
+function getQuotes(){
+
+}
+
+/* Gets the next quote in line
+ * Parameter is the time of the previous quote which has been gotten
+*/
+function getNextQuote(time, callback){
+    $.get('/quotes' + time, function(data) {
+        callback(null, data);
+    }).fail(callback);
+}
+
+/* Appends html-elements with new quote info into #quotes-section
+ * gets the data of a quote in json form
+*/
+function constructQuoteElement(data){
+    if(data != null){ //if we found a quote with time
+        // gotta do something about this mess of a code. 
+        // should probably move it to another function too.
+        var lineString = $('<div class="line"></div>');
+        var quoteString = $('<div class="quoteDiv">' 
+                                + '<p class="time">' + data.time + '</p>' + '<br>'
+                                + 'Lähettäjä: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
+                                + '@ <p class="quotePlace">' + data.place + '</p>' + '<br>' + '<br>'
+                                + '<p class="quoteQuote">' + data.quote + '</p>' + '<br>'
+                            + '</div>');
+        $("#quotes").append(lineString);
+        $("#quotes").append(quoteString);
+        return data.time;
+    }else{
+        console.log("Element could not be created, data not found!");
+    }
+}
 
 /* when page loads, make sure to load some quotes
    I'm fairly sure that theres a better/faster way of doing this, but this seems safe and it works so meh.*/
@@ -51,7 +67,7 @@ $(function(){
     while(hContent<=hWindow){
         // Throttle means that it will call the function max every 1000ms
         // aka you can't "spam" quotes
-        _.throttle(getQuotes(10), 0);
+        _.throttle(getQuotes(5), 0);
     }
 });
 

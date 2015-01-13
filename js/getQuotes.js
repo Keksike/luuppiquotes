@@ -8,18 +8,16 @@ var h = require('virtual-dom/h'),
 
 
 // tells us which id we last checked
-var prevTime = moment();
 var lol = 0;
+var timestamp = Date.now();
 
 /* amount = amount of fetched quotes and created quoteDivs */
-function getNextQuotes(prevTime, amount){
-    $.get("/quotes", {limit: amount, time: prevTime}).done(function(data){
+function getNextQuotes(lastTime, amount, callback){
+    $.get("/quotes/", {time: lastTime, amount: amount}).done(function(data){
         if(data !=  null){
-            for(var key in data){
-                constructQuoteElement(data[key]);
-            }
+            callback(null, data);
         }
-    }, "json" );
+    }, "json" ).fail(callback);
 };
 
 function getQuotes(){
@@ -38,37 +36,54 @@ function getNextQuote(time, callback){
 /* Appends html-elements with new quote info into #quotes-section
  * gets the data of a quote in json form
 */
-function constructQuoteElement(data){
+function constructQuoteElements(data){
     if(data != null){ //if we found a quote with time
         // gotta do something about this mess of a code. 
         // should probably move it to another function too.
-        var lineString = $('<div class="line"></div>');
-        var quoteString = $('<div class="quoteDiv">' 
-                                + '<p class="time">' + data.time + '</p>' + '<br>'
-                                + 'Lähettäjä: <p class="quoteSender">' + data.sender + '</p>' + '<br>'
-                                + '@ <p class="quotePlace">' + data.place + '</p>' + '<br>' + '<br>'
-                                + '<p class="quoteQuote">' + data.quote + '</p>' + '<br>'
-                            + '</div>');
-        $("#quotes").append(lineString);
-        $("#quotes").append(quoteString);
-        return data.time;
+        console.log(data.length);
+        console.log(data);
+
+        var newTime;
+
+        console.log(data[0].time);
+
+        //iterate through data
+        for(var i = 0; i < data.length; ++i){
+            //Format time to something useful*/
+            var date = moment(data[i].time).format('DD/MM/YYYY HH:mm');
+
+            //idString includes quoteId of quote and then a separating line
+            var idString = $('<div class="idDiv"><div class ="id">' +/*+ data[i].quoteId +*/ '</div><div class="line"></div></div>');
+            //generate the whole quote-div
+            var quoteString = $('<div class="quoteDiv">' 
+                                    + '<p class="time">' + date + '</p>' + '<br>'
+                                    + 'Lähettäjä: <p class="quoteSender">' + data[i].sender + '</p>' + '<br>'
+                                    + '@ <p class="quotePlace">' + data[i].place + '</p>' + '<br>' + '<br>'
+                                    + '<p class="quoteQuote">' + data[i].quote + '</p>' + '<br>'
+                                + '</div>');
+            $("#quotes").append(idString);
+            $("#quotes").append(quoteString);
+
+            //if last quote in data, return data.time for later use
+            if(i == data.length-1){
+                console.log("palauttaa " + data[i].time);
+                return data[i].time;
+            }
+        }
     }else{
-        console.log("Element could not be created, data not found!");
+        console.log("Elements could not be created, data not found!");
     }
 }
 
-/* when page loads, make sure to load some quotes
-   I'm fairly sure that theres a better/faster way of doing this, but this seems safe and it works so meh.*/
+/*When page loads load quotes, gotta get rid of this*/
 $(function(){
-    var hContent = $("body").height();
-    var hWindow = $(window).height();
-
-    // loads single quotes until we have a scroll bar
-    while(hContent<=hWindow){
-        // Throttle means that it will call the function max every 1000ms
-        // aka you can't "spam" quotes
-        _.throttle(getQuotes(5), 0);
-    }
+    getNextQuotes(timestamp, 5, function(err, quotes){
+        if(err){
+            console.log(err);
+            return;
+        }
+        timestamp = constructQuoteElements(quotes);
+    });
 });
 
 /* gets quotes when scrolling page down */
@@ -77,6 +92,13 @@ window.onscroll = function() {
     if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)) {
         // Throttle means that it will call the function max every 1000ms
         // aka you can't "spam" quotes
-        _.throttle(getQuotes(5), 1000);
+        getNextQuotes(timestamp, 5, function(err, quotes){
+            if(err){
+                console.log(err);
+                return;
+            }
+
+            timestamp = constructQuoteElements(quotes);
+        });
     }
 };

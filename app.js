@@ -70,8 +70,10 @@ quoteSchema.plugin(autoIncrement.plugin, {model: 'Quote', field: 'quoteId'});
 app.post('/postQuote', function(req, res) {
     //Create new instance of Quote-model, with the sent data (req.body)
     var quote = new Quote(req.body);
+
     //replaces \r and \n to <br> so it can be used in <p>
     quote.quote = quote.quote.replace(/\r?\n/g,"<br>");
+    quote.time = Date.now();
     console.log(quote); //for testing
 
     //Save it
@@ -81,7 +83,7 @@ app.post('/postQuote', function(req, res) {
 });
 
 /*Gets a single quote, which is the next newest one of "timeNow"*/
-app.get('/quotes/:timeNow', function(req, res) {
+/*app.get('/quotes/:timeNow', function(req, res) {
 
     var aika = parseInt(req.params.timeNow);
     console.log(aika);
@@ -97,40 +99,47 @@ app.get('/quotes/:timeNow', function(req, res) {
 
         res.send(quote);
     });
-});
+});*/
 
 /*Gets n (where n = amount) quotes, starting from next newest of timeNow*/
-app.get('/quotes', function(req, res) {
+app.get('/quotes/', function(req, res) {
     var time;
+    //default amount 1, if only time is given
     var amount = 1;
 
-    if(req.params.time != null){
-        time = parseInt(req.params.time);
+    if(req.query.time != null){
+        time = parseInt(req.query.time);
+        console.log(time);
     }else{
-        console.log("timea ei annettu!");
-        return null;
+        /*Returns all quotes*/
+        Quote.find({}, 'quoteId sender place quote time', function(err, quotes) {
+            res.send(quotes);
+        });
+        return;
     }
 
-    if(req.params.limit){
-        amount = parseInt(req.params.amount);
+    if(req.query.amount){
+        amount = parseInt(req.query.amount);
+        console.log(amount);
     }else{
         console.log("Määrää ei annettu!");
     }
-    console.log(amount);
-    console.log(time);
 
     //first sorts quotes newest to oldest
     //then finds the top n (where n = req.params.amount) quotes, where time < req.params.timeNow
-    Quote.find().sort({time: -1}).find({time: {$lt: time}}).limit(amount, function(err, quote){
+    /*Quote.find().sort({time: -1}).find({time: {$lt: time}}).limit(amount, function(err, quotes){*/
+    Quote.find().sort({time: -1}).find({time: {$lt: time}}).limit(amount).exec(function(err, quotes){
+        console.log("asd");
         if(err){
             console.log(err);
             return res.status(500).send("Jotain meni pieleen!");
         }
-        if(!quote){
-            return res.status(404).send("Quoteja ei löytynyt!");
+        if(!quotes){
+            return res.status(404).send("quoteja ei löytynyt!");
         }
+        console.log(quotes);
 
-        res.send(quote);
+        res.send(quotes);
     });
 });
 

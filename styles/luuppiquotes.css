@@ -3,7 +3,7 @@ html, body{
 }
 body{
 	height: auto;
-	background-image:url(./images/use_your_illusion.png);
+	background-image:url(./images/dark_mosaic.png);
 	background-repeat:repeat;
 }
 
@@ -134,14 +134,64 @@ h1{
 
 /*Div of a single quote*/
 .quoteDiv{
+	position: relative;
 	display: inline-block;
 	margin: 1em;
+
 
 	width: 90%;
 	height: auto;
 
 	color: white;
 	font-family: foobar;
+}
+
+.votes{
+	position: relative;
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+    /*position: absolute;*/
+	float: left;
+	position: relative;
+	width: 20px;
+	color: white;
+}
+
+.votes div{
+	margin-left: 3px;
+}
+
+.upvote{
+	margin-bottom: 5px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 7.5px 12px 7.5px;
+	border-color: transparent transparent white transparent;
+}
+
+.upvote:hover{
+	cursor: pointer;
+	border-color: transparent transparent orange transparent;
+}
+
+.downvote{
+	margin-top: 5px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 12px 7.5px 0 7.5px;
+	border-color: white transparent transparent transparent;
+}
+.downvote:hover{
+	cursor: pointer;	
+	border-color: orange transparent transparent transparent;
+
+}
+
+.content{
+	padding-left: 50px;
 }
 
 .quoteDiv p{

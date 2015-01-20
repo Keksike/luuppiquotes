@@ -37,4 +37,12 @@ $(function(){
             "json" // The format the response should be in
         );
     });
+
+
+    $("#upvote").click(function(){
+        
+    });
+    $("#downvote").click(function(){
+        
+    });
 });

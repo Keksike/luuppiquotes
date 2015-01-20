@@ -27,7 +27,7 @@ autoIncrement.initialize(connection);
 /*conf*/
 app.use(morgan('dev')); // log every request to the console
 app.set('port', process.env.PORT || 3000); //port 3000
-app.use( bodyParser.json() );    // to support JSON-encoded bodies
+app.use(bodyParser.json());    // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({  // to support URL-encoded bodies
     extended: true
 })); 
@@ -53,6 +53,10 @@ var quoteSchema = new mongoose.Schema({
     time: {
         type: Number,
         default: Date.now()
+    },
+    votes: {
+        type: Number,
+        default: 0
     }
 }, {
     toJSON: { //mongoids or mongoversion doesnt need to be shown
@@ -80,6 +84,27 @@ app.post('/postQuote', function(req, res) {
     quote.save(function(err, quote) {
         /*res.send(404, 'error.');*/
     });
+});
+
+
+/*Not sure if I should make an own functions for upvote & downvote, went with this*/
+/*query-params required: quoteId (number) & upvote (boolean)*/
+app.post('/vote/', function(req, res) {
+
+    if(req.query.quoteId == null || req.query.upvote == null){
+        return res.status(400).send("Id:tä ei tullut!");
+    }
+
+    var voteCommand;
+
+    if(req.query.upvote == true){ //if upvote true, increment by 1
+        voteCommand = {$inc: {votes: 1}};
+    }else{ //if upvote false increment by -1
+        voteCommand = {$inc: {votes: -1}};
+    }
+
+    //issue update to quote of given id
+    Quote.update({quoteId: req.query.quoteId}, voteCommand, {}, callback);
 });
 
 /*Gets a single quote, which is the next newest one of "timeNow"*/

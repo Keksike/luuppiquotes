@@ -56,14 +56,15 @@ function constructQuoteElements(data){
             var date = moment(data[i].time).format('DD/MM/YYYY HH:mm');
 
             //idString includes quoteId of quote and then a separating line
+            var voteString = $('<div class="votes">55</div>');
             var idString = $('<div class="idDiv"><div class ="id">' +/*+ data[i].quoteId +*/ '</div><div class="line"></div></div>');
             //generate the whole quote-div
-            var quoteString = $('<div class="quoteDiv">' 
+            var quoteString = $('<div class="quoteDiv"><div class="votes"><div class="upvote"></div>55<div class="downvote"></div></div><div class="content">' 
                                     + '<p class="time">' + date + '</p>' + '<br>'
                                     + 'Lähettäjä: <p class="quoteSender">' + data[i].sender + '</p>' + '<br>'
                                     + '@ <p class="quotePlace">' + data[i].place + '</p>' + '<br>' + '<br>'
                                     + '<p class="quoteQuote">' + data[i].quote + '</p>' + '<br>'
-                                + '</div>');
+                                + '</div></div>');
             $("#quotes").append(idString);
             $("#quotes").append(quoteString);
 
